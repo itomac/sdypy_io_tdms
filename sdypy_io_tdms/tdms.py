@@ -47,7 +47,8 @@ def read_tdms(path: Union[str, Path]) -> list:
     groups = tdms_file.groups()
 
     for group in groups:
-        channels = tdms_file[group.name].channels()
+        channels = [_ for _ in tdms_file[group.name].channels() \
+                    if _.name.lower() != 'time']
         for channel in channels:
             signal = {
                 'group': group.name,
